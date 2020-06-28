@@ -1,0 +1,50 @@
+* Hệ quản trị cơ sở dữ liệu (Database manament system): là 1 phần mềm để lưu trữ dữ liệu không có giao diện
+ - Database : cơ sở dữ liệu
+
+* có 2 loại:
+ - cơ sở dữ liệu quan hệ (relation database): SQL -> trong thực tế sw dụng loại này
+   + cấu trúc gồm các bảng dữ liệu có các cột và hàng
+   + sử dụng cơ sở dữ liệu MySQL
+   
+ - cơ sở dữ liệu không quan hệ (non relation database): NoSQL
+
+ - các bước thiết kế database:
+   + tạo ra các bảng:
+   + tạo những dữ liệu cho mỗi bảng
+   + tạo quan hệ giữa các bảng
+
+ - Database:
+   + Table:
+     . column:
+     	. PK : primary key (khóa chính)
+     	. AI : auto increment (tự động tăng thêm 1)
+     	. NN : not null
+     	. UQ : unique (không được trùng)
+     	.
+     . row 
+ - data type:
+   + tiny int: số tự nhiên (0-255)
+   + int : số tự nhiên (khoảng 2 tỷ)
+   + bigint : số tự nhiên (khoảng vài triệu tỷ) (thường dùng cho giá tiền)
+   + varchar() : text
+   + char() : giới hạn ký tự 
+   + text(0) : để lưu một đoạn văn trong khoảng 60000 ký tự
+   + date : ngày
+   + datetime : ngày giờ 
+
+ - quan hệ:
+   + 1 - 1 : trường hợp 1 bảng có nhiều cột và muốn tách thành các bảng con (cách tạo khóa giống 1 - n)
+   + 1 - n : ở bảng con tạo khóa ngoại liên kết đến bảng cha ( 2 PK ở 2 bảng sẽ giống nhau và liên kết đến nhau)
+   + n - n : thành phần ở bảng A có thể thuộc nhiều thành phần của 1 cột ở bảng B và ở bảng B cũng như vậy ( có 1 bảng C để liên kết 2 bảng A và B)
+   		. ở bảng C sẽ có 2 khóa ngoại liên kết đến 2 khóa chính của 2 bảng A và B
+
+
+* Ví Dụ: Thiết kế csdl của 1 trang web blog:
+ - các tính năng:
+   + người dùng đăng ký : email, username, password, sex..
+   + người dùng đăng nhập : lưu lại các lần đã đăng nhập (IP)
+   + sau khi đăng nhập : người dùng có thể:
+   	 . đăng bài viết gồm : tiêu đề, nội dung, ảnh
+   	 . bài viết có thêm các : tag
+   	 . 1 bài viết có nhiều tag, mỗi tag sử dụng cho nhiều bài viết
+   	 . comment bài viết: nội dung cmt

@@ -1,0 +1,505 @@
+* Composer: 
+ - là 1 package manage ( phần mêm quản lý gói)
+ - cài các gói: 
+ 			vd: composer require tên_công_ty/tên_gói --dev
+ - xóa gói:
+ 			vd: composer remove tên_công_ty/tên_gói 
+ - vender: thư mục chứa code của framework
+ - composer.json: là file chứa tất cả các gói
+ - để cài lại các thư mục đã bị xóa (trường hợp file composer.json vẫn còn):
+ 			vd: composer install
+ - composer.lock: cũng là file chứa thông tin các gói nhưng bị khóa version của gói đó, tránh trường hợp version của dev khác với version của server
+ - sau khi sửa đổi file composer.json thực hiện câu lệnh
+ 			vd: composer update
+ - lưu ý: thông thường nên đẩy chung file composer.json và composer.lock chung nhau
+ - để tạo project:
+ 			vd: composer create-project tên_công_ty/tên_gói thư_mục
+
+* Laravel:
+ - tạo 1 project sử dụng Laravel:
+ 			vd: composer create-project laravel/laravel tên_thư_mục
+ - chạy server Laravel:
+ 			vd: php artisan serve
+ - trong laravel đã tích hợp sẵn VUE JS
+ - cấu trúc file của laravel:
+ 	 + app: chứa các controller, model....
+ 	   + Http: 
+ 	   	 + Controller: nơi chứa các controller
+ 	 + bootstrap: chứa các file khởi động, cache...
+ 	 + config: chứa các file cấu hình
+ 	 + database: 
+ 	 	 + migration: là các file php để tạo, thao tác với database	
+ 	 + public: chứa các file đã được build
+ 	 + resource: chứa các file:
+ 	 	 + js
+ 	 	 + css
+ 	 	 + view: file html, hiển thị
+ 	 	 + lang: ngôn ngữ
+ 	 + routes: chứa các file router (điều hướng đến các controller)
+ 	 + storage: chứa các file cache
+ 	 	 + logs: xem lỗi ở đây
+ 	 + test: chứa các unit test (viết các test, sử dụng cho tester)
+ 	 + vender: là thư mục chứa các thư viện (composer.json và .lock)
+ 	 + .env (environment): là các biến môi trường sử dụng để cấu hình
+ 	 	 + APP_ENV: file đang ở local hoặc production
+ 	 	 + APP_KEY: 
+ 	 + .env.example: là file backup của file .env
+ 	 + artisan: là 1 công cụ của paravel và được viết bằng php và có các chức năng:
+ 	 	 + make :
+ 	 	 		. controller: tạo ra các controller tự động
+ 	 	 				vd: php artisan make:controller ArticalController 
+ 	 	 		. model: tạo ra các model tự động 
+ 	 	 			. tuy nhiên file này sẽ ko nằm trong thư mục nào do đó ta phải cho nó vào 1 thư mục nào đó
+ 	 	 			. có thể tạo luôn các migration cho các model đó (-m)
+ 	 	 				vd: php artisan make:model Artical   // chỉ tạo ra file model
+ 	 	 				vd: php artisan make:model Models/Article  // tạo cả thư mục chứa file tạo ra
+ 	 	 		.
+ 	 	 + config: config chứa ở file .env sẽ được dịch sang code php và code mới sẽ được lưu ở thư mục cache
+ 	 	 		. clear: xóa cache config
+ 	 	 				vd: php artisan config:clear
+ 	 	 		. cache: vừa clear vừa cache lại config
+ 	 	 				vd: php artisan config:cache 
+ 	 	 + migration: 
+ 	 	 		. là các file php để tạo, thao tác với database
+ 	 	 		. là đoạn code php để thao tác với db
+ 	 	 		. sử dụng để quản lý các lần thay đổi dữ liệu trong db
+ 	 	 		. các câu lệnh artisan với migration:
+ 	 	 			. php artisan migrate : tiến đến lần cập nhật db trước
+ 	 	 			. php artisan migrate:rollback : quay lại lần cập nhật dữ liệu lần trước
+ 	 	 			. php artisan migrate:refresh : xóa toàn bộ db và migrate lại
+ 	 	 		. Schema: đại diện cho bảng
+ 	 	 			. increment('id'): loại dữ liệu int, tự động tăng, tự động coi là khóa chính (thường được sử dụng cho cột id)
+ 	 	 			. integer(): kiểu int (không tự tăng)
+ 	 	 			. string('tên_cột'): kiểu varchar
+ 	 	 			. text() : kiểu text
+ 	 	 			. longText(): kiểu long text (cho bài viết dài)
+ 	 	 			. char('mã_sinh_viên', 5):
+ 	 	 			. date('ngay_sinh')
+ 	 	 			. dateTime()
+ 	 	 			. float(): số thập phân
+ 	 	 			. double(): giống float() nhưng lớn  hơn
+ 	 	 			. timestamps(): số giây từ ngày 1/1/1970
+ 	 	 			. 
+ 	 	 + request:
+ 	 	 			vd: php artisan make:request ArticleCreateRequest
+
+ 	 + ORM(object relation mapping): laravel hỗ trợ liên kết các bảng ở db với các model trong code
+ 	 	 + kết hợp tạo bảng và tạo migration:
+ 	 	 		vd: php artisan make:model Models/Article -m
+ - routes trong Laravel:
+ 	 + mọi request từ người dùng sẽ đi qua index.php sau đó vào routes 
+ 	 + web.php: 
+ 	 		Route::get('url', function hoặc chuỗi)
+ 	 	. 1 vài routes:
+ 	 			. get: Route::get('url', 'tên_controller@tên_hàm');
+ 	 					vd: Route::get('/bai-viet', 'ArticleController@show');
+ 	 			. post: Route::post('url', 'tên_controller@tên_hàm');
+ 	 					vd: Route::post('/them-bai-viet', 'ArticleController@create');
+ 	 			. put
+ 	 			. delete
+ 	 			. options
+
+ 	 + đặt tên cho route: để dễ dàng thao tác với các route sau này
+ 	 				vd: Route::get('/bai-viet', 'ArticleController@show')->name('show_article');
+
+ 	 + route với tham số: '/url/{tham_số}'  
+ 	 		. tất cả các tham số trong route sẽ trở thành các biến của các hàm trong các controller 
+ 	 				vd: Route::get('/bai-viet/{id}', 'ArticleController@show')->name('show_article');
+
+	 + route group: nhóm những route gần giống nhau lại thành 1 group
+	 			Route::group(['các_option' => ''], function(){
+
+	 			})
+	 		. 1 vài option phổ biến:
+	 			. prefix: tiền tố
+	 					vd: Route::group(['prefix' => '/bai-viet'], function(){
+	 									Route::get('/xem/{id}', 'ArticleController@show')->name('show_article');
+	 							})
+ - Controller:	 							
+ 	+ Controller
+ 		. là 1 sân chơi cho các model tương tác với nhau
+ 		. là nơi nhận tất cả các request từ client gửi lên
+ 		. tạo controller: php artisan make:controller TênController  (chú ý: 'TênControlle' chữ đầu viết hoa và phải có 'Controller')
+ 	
+ - Request:
+ 	+ Request là 1 object chứa toàn bộ các thông tin mà người dùng gửi lên
+ 	+ trình duyệt gửi thông tin lên server, route xử lý thông tin và gửi các request đến các controller
+ 	+ Khi muốn thực hiện 1 công việc với controller thì nên tạo ra riêng 1 request
+ 		. trong controller có các rule(luật) để đặt các quy tắc cho thông tin gửi lên
+ 		. trong trường hợp các request không hợp lệ, server sẽ trả về authorize là false và báo lỗi lại trên trình duyệt
+ 		. nếu muốn dùng request thì phải cho vào tham số đầu tiên
+ 				vd: public function show(Request $request, $id) {  //Request là tên của 1 class mà laravel đã định nghĩa sẵn từ trước
+
+ 						}
+ 		. use Illuminate\Http\Request; là 1 request cơ bản
+ 		. $request->all(): trả về 1 mảng các tham số của request (ở form gửi lên dữ liệu như nào thì trong đấy sẽ có 1 mảng chứa các dữ liệu đó)
+ 		. $request->only(chuỗi hoặc mảng): lọc request với các chuỗi hoặc mảng đã thêm (nhưng vẫn lọc ra dưới dạng mảng)
+ 			. với chuỗi thì trả về giá trị duy nhất:
+ 						vd: $request->only('title');
+ 			. với mảng thì trả về các tham số
+ 						vd: $request->only(['title', 'content']);
+ 		. $request->except(chuỗi hoặc mảng): lọc request ngoại trừ các chuỗi hoặc mảng đã thêm
+ 						vd: $request->except('title');
+ 		. $request->has(chuỗi): kiểm tra tham số có tồn tại hay không (có thì trả về true, không thì trả về false)
+ 						vd: if ($request->has('title')) {
+ 									echo 'có tiêu đề!';
+ 								}
+ 		. $request->input('title') = $_POST['title'] = $request->title
+ 	+ hàm authorize(): là hàm để kiểm tra xem request này có hợp lệ hay không
+ 		. nếu return true thì request hợp lệ và sẽ gọi đến hàm trong controller 
+ 		. và ngược lại return false là request không hợp lệ, sẽ tự động quay trở lại trang đang sử dụng
+ 	+ hàm rules(): là hàm trả về các luật để sử dụng cho việc kiểm tra của hàm authorize() ở trên
+ 	+ 1 vài rules quan trọng:
+ 		. unique:tên_bảng => kiểm tra xem fill này đã có trong bảng ở dưới db hay chưa
+ 		. required => bắt buộc phải có, không được để trống
+ 		. min:4 => số lượng ký tự tối thiếu có thể cho phép (sau dấu ':')
+ 		. max:100 => số lượng ký tự tối đa có thể cho phép (sau dấu ':')
+ 		. date => bắt buộc là kiểu ngày tháng
+ 		. email => bắt buộc phải nhập kiểu email
+ 		. url => bắt bộc phải nhập 1 địa chỉ web
+ 		. alpha => a-z và 0-9 (vd: khanh1808)
+ 		. alpha_dash => giống alpha và có thêm dấu gạch dưới (vd: khanh_1808)
+ 		. integer => bắt buộc nhập số
+ 		. ip  => bắt buộc phải nhập địa chỉ ip
+ 		. tra google
+ 	+ chú ý: các luật của 1 fill được cách nhau bởi ký tự '|'
+ 		vd: public function rules() {
+		        return [
+		            //
+		            'title' => 'required|unique:articles|min:6|max:100'
+		        ];
+		    }
+	+ để có thể hiển thị lỗi: 
+		. b1: ở request ta tạo thêm 1 hàm messages() :
+			vd: public function messages()
+			    //hàm hiện thông báo lỗi
+			    {
+			        return [
+			            'required' => 'box :attribute không được để trống!',
+			            'min' => 'box :attribute phải có ít nhất 6 ký tự',
+			            'max' => 'box :attribute chỉ có tối đa 100 ký tự',
+			            'unique' => ':attribute này đã được sử dụng, vui lòng sử dụng 1 :attribute khác'
+			        ];
+			    }
+		. b2: ở view ta sử dụng hàm @error và biến $message để có thể hiển thị lỗi
+			vd: @error('title')
+                    <div style="color:red">
+                        {{ $message }}
+                    </div>
+	            @enderror
+ - Response:
+ 	+ cách response của laravel: return ngay ở hàm của các controller
+ 	+ return 1 view: (Có thể return thêm data)
+ 	+ return back: trở về trang cũ (hàm back() là hàm đã được tạo sẵn trong laravel)
+ 				vd: return back();
+ 	+ return with input: trả về với các dữ liệu đã nhập 
+ 				vd: return back()->withInput();
+ 	+ return with: đầy thêm thông tin gì đó về trang cũ
+ 	+ return json: trả về type json
+ 				vd: return response()->json(['name' => 'khanh', 'age' => 21]);
+ 	+ return redirect(): là 1 object để chuyển trang 
+ 		. trỏ đến 1 route nào đó:
+ 				vd: return redirect()->route('show_article', ['id' => 2]);
+ 		. chuyển đến 1 trang nào đó
+ 				vd: return redirect()->away('google.com');
+ - eloquent model: 
+ 	+ ORM(object relation mapping): laravel hỗ trợ liên kết các bảng ở db với các model trong code
+
+ - fillable: để 1 model ở trên code muốn lưu dữ liệu xuống db thì ta phải định nghĩa cho nó các trường có thể luu dưới ( định nghĩa các field dưới db )
+ 	+ phải tạo 1 biến fillable là 1 mảng chứa các mask của các dữ liệu đẩy xuống db (tên của các cột trong bảng)
+ 		vd: protected $fillable = [
+		        'title',
+		        'content'
+
+		    ];
+	+ ở phần model có 2 cách đẩy data xuống db:
+		. sử dụng 1 hàm Create(array): tạo ra 1 object model và lưu xuống db
+						vd1: public function create(RequestsCreateArticleRequest $request) {
+						        Article::Create( $request->all());  
+					    	 }
+		. khởi tạo 1 object mới chứa mảng data và sử dụng hàm save() để đẩy data xuống db
+						vd2: public function create(RequestsCreateArticleRequest $request) {
+						        $newArticle = new Article( $request->all());
+						        $newArticle->save();  
+					    	 }
+	+ model chỉ nhận các property được liệt kê trong biến fillable
+	+ trường hợp không cần trường timestamp thì ta phải khai báo ỏ modelcontroller biến timestamp = false để hiểu rằng không sử dujngunjng đến biến này
+		vd: public $timestamps = false;
+
+ - lấy model từ db: (tất cả các hàm này đểu có sẵn trong laravel và được gọi ra bằng cách gọi hàm static(::))
+ 	+ model chỉ đọc được db khi gặp các hàm: all(), paginate(), get(), find(), findOrFail(), counts()
+ 	+ Create(array): tạo ra 1 object model và lưu xuống db
+ 	+ update(): sửa db
+ 			vd: Article::where('id', 3)->update(['content' => 'new content 3']);
+ 	+ updateOrCreate(): nếu dưới db chưa có thì thêm vào còn nếu có rồi thì update
+ 			vd: Article::updateOrCreate( 
+	            ['title' => 'hiếu', 'content' => 'f'], // các thuộc tính create
+	            ['title' => 'chiến'] // thuộc tính sẽ update nếu mảng trên đã tồn tại trong db
+	        );  
+	+ firstOrCreate(): nếu chưa có thì tạo mới, nếu có rồi thì đọc dòng đó ra
+			vd: Article::firstOrCreate( 
+	            ['title' => 'khanh']
+	        );  
+ 	+ find( $id ): trả về 1 object
+ 			vd: public function show(Request $request, $id) {
+			        $article = Article::findOrFail($id);
+			        echo $article->title;
+			        echo '<br/>';
+			        echo $article->content;
+			    }
+	+ find(array) : trả về nhiều object và sử dụng vòng lặp để hiển thị ra kết quả
+			vd: public function show(Request $request, $id) {			        
+			        $articles = Article::find( [2,3]);
+			        foreach($articles as $article) {
+			            echo $article->title;
+			        }
+			    }
+	+ findOrFail(): giống như find() nhưng khi không tìm thấy thì trang sẽ báo lỗi 404
+	+ all(): trả về tất cả dữ liệu trong db
+			vd: public function show(Request $request, $id) {			        
+			        $articles = Article::all();
+			        foreach($articles as $article) {
+			            echo $article->title;
+			        }
+			    }
+	+ paginate(số_lượng_phần_tử_trong_trang): phân trang
+		. sử dụng hàm links() để có thể có các thẻ link giữa các trang
+			vd: public function show(Request $request, $id) {			        
+			        $articles = Article::paginate(2);
+			        foreach($articles as $article) {
+			            echo $article->title;
+			        }
+			        echo $articles->links();
+			    }
+  + where(): tìm kiếm theo điều kiện
+  	. chú ý: chỉ sử dụng hàm where thì sẽ không lấy được các kết quả mong muốn, ta có thể kết hợp với hàm paginate() để lấy ra kết quả
+  		vd: public function show(Request $request, $id) {			        
+			        $articles = Article::where(['id' => '4'])->paginate(2);
+			        foreach($articles as $article) {
+			            echo $article->title;
+			        }
+			        echo $articles->links();
+			    }
+
+  	. hàm where() thường đi đôi với hàm get(): là hàm để lấy kết quả từ điều kiện của hàm where
+  		vd: public function show(Request $request, $id) {			        
+			        $articles = Article
+			            ::where('id', '>', '2')
+			            ->where('id', '<', '5')
+			            ->get();
+			        foreach($articles as $article) {
+			            echo $article->title;
+			        }
+			    }
+	+ whereNot(): không phải 
+			vd: đọc ra tất cả các dữ liệu mà id KHÔNG PHẢI là 4
+	+ counts(): tổng số lượng
+			vd: public function show(Request $request, $id) {			        
+			        $totalArticle = Article
+			            ::where('id', '>', '2')
+			            ->where('id', '<', '5')
+			            ->counts();
+			        echo $totalArticle;
+			    }
+	+ max(), min()
+	+ orderBy(filed, kiểu sắp xếp): xem lại phần SQL
+	+ limit() : thường chỉ sử dụng ra với mục đích lấy ra số lượng cụ thể data muốn lấy chứ không dùng để phân trang
+			vd: lấy ra 10 bài viết có số lượng view cao nhất	
+	+ take() = limit(): thường sử dụng hàm này chứ không dùng limit
+			vd: public function show(Request $request, $id) {
+			        $articles = Article
+			            ::orderBy('id', 'desc')
+			            ->take(3)
+			            ->get();
+			        foreach($articles as $article) {
+			            echo $article->title;
+			        }
+			    }
+	+ delete(): xóa hàng trong db
+			vd: Article::where('id', 2)->delete();
+	+ SoftDelete: đây KHÔNG phải là 1 hàm mà là 1 cách thức để backup data trong db ngay cả khi có sử dụng hàm delete() để xóa 1 hàng trong csdl
+		. khi xóa 1 hàng thì hàng đó không thực sự biến mất, nó sẽ được lưu vào 1 cột khác
+		. để sử dụng ta tạo thêm 1 cột deleted_at:
+				vd: Schema::create('articles', function (Blueprint $table) {
+		            $table->bigIncrements('id');
+		            $table->string('title');
+		            $table->text('content');
+		            $table->timestamps(0);
+		            $table->softDeletes();
+		        });
+		. và trong model ta gọi đến namespace SolfDelete:
+				vd: use Illuminate\Database\Eloquent\SoftDeletes;
+						class Article extends Model
+						{
+						    //
+						    use SoftDeletes;
+						    protected $fillable = [
+						        'title',
+						        'content'
+
+						    ];
+						}
+		. để hiển thị ra tất cả dữ liệu kể các các dữ liệu đã delete ta sử dụng hàm withTrashed():
+				vd: $articles = Article::withTrashed()->get();
+						foreach ($articles as $article) {
+							echo $article->title.'</br>';
+						}
+		. để hiển thị ra các dữ liệu đã delete ta sử dụng hàm onlyTrashed():
+				vd: $articles = Article::onlyTrashed()->get();
+						foreach ($articles as $article) {
+							echo $article->title.'</br>';
+						}
+
+
+ - Token: Là 1 chuỗi xác minh => gồm nhiều ký tự khó đoán
+ 	 + sử dụng 1 field: {{ csrf_field() }}
+ 				vd: 
+ 					app => gửi username, password lên server,
+ 					nếu đăng nhập thành công, server => trả về app 1 chuỗi Token ngấu nhiên
+ 					app sẽ lưu chuỗi Token đó lại, 
+ 					những lần đăng nhập tiếp theo, app sẽ bắt buộc phải gửi kèm theo chuỗi Token đó,
+ 					server sẽ kiểm tra, nếu đúng thì server sẽ trả về dữ liệu, còn nếu không đúng, server sẽ bắt buộc app phải đăng nhập lại
+
+ - seeder: là 1 bộ tạo dữ liệu có sẵn (không phải thao tác tay để tạo từng dữ liệu)
+ 	+ kết hợp với thư viện có tên Faker để tạo ra các mẫu có sẵn cho các dữ liệu mẫu
+ 	+ các bước để tạo seeder kết hợp faker"
+ 		. tạo 1 file tên_seed.php trong thư mục database/seeds
+ 		. khai báo namespace, các fillable của faker
+ 		. cmd: php artisan db:seed --class=tên_seeds
+ 	+ nếu khi tạo db:seed mà xảy ra lỗi thì chạy : composer dump-autoload để load lại file autoload
+
+
+ - Blade template
+ 	+ thông thường ta sẽ viết code php chung với html do đó khiến code của ta bị rối
+ 				vd: <?php foreach($articles as $article) { ?>
+ 								<div>
+ 										<?php echo $article->title; ?>
+ 								</div>
+ 						<?php } ?>
+ 		===> do đó ta có công cụ template engine 
+ 	+ template engine: là 1 bộ chuyển đổi từ 1 dạng code nào đó sang php
+ 	+ tất cả các file đều phải có đuôi là .blade.php
+ 	+ quy tắc dựng layout: chia thành các phần nhỏ và extends 
+ 		. có các master layout:
+ 		. các child 
+
+  + các hàm trong template engine được bắt đầu bằng ký tự @
+  + 1 số hàm trong template engine
+  	. @yield('') : ở khu vực này sẽ chèn 1 thành phần khác vào
+  	. @extends('')
+  	. @section('')
+  + xuất ra 1 chuỗi: {{	$A }} = <?php echo $A ?>
+  + vòng lặp: với vòng lặp sẽ viết bình thường chỉ cần thêm vào đầu ký hiệu @ và có @end
+  		vd: @foreach ($articles as $article)
+  						{{	$A	}}
+  				@endforeach
+
+  				@for($i = 0; $i <= 10; $i++)
+  						{{	$i	}}
+  				@endfor
+  + nói chung ký @ và @end sử dụng để thay thế cho dấu {} của các hàm
+
+ - Relationship: mối quan hệ giữa các model
+ 	+ 1 - n:
+ 		. ở 1 model ta tạo ra 1 hàm để thể hiện ở model này thì chứa nhiều model khác	(hasMany('đường dẫn đến model'))
+ 					vd: class Article extends Model
+			 				{
+			 				    //
+			 				    // use SoftDeletes;
+			 				    protected $fillable = [
+			 				        'title',
+			 				        'content'
+
+			 				    ];
+			 				    public function comments() {
+			 				        return $this->hasMany('App\Models\Comment');
+			 				    }
+			 				}
+		. ở model còn lại sử dụng hàm belongsTo('đường dẫn đến model')
+					vd: class Comment extends Model {
+							    //
+							    public function article() {
+							        return $this->belongsTo('App\Models\Article');
+							    }
+							}
+	+ 1 - 1: giống như 1 - n nhưng đặt hàm belongTo() ở cả 2 model
+	+ n - n: 
+		. tạo ra 1 migration mới là 1 migration chung của 2 model:
+			vd: php artisan make:migration create_category_articles_table
+		. tạo ra các cột cho bảng đó rồi migrate xuống db
+		. ở cả 2 model gốc ta tạo ra 1 hàm belongsToMany('đường dẫn đến model kia', 'tên migration chung của 2 model')
+			vd: 2 model: Article và Category
+				. ở Article: 
+					public function categories() {
+				        return $this->belongsToMany('App\Models\Category', 'category_articles');
+				    }
+				. ở Category:
+					public function articles() {
+				        return $this->belongsToMany('App\Models\Article', 'category_articles');
+				    }
+
+ - LaravelUI: là 1 gói của laravel sử dụng cho fronend (user interface) đã tích hợp sẵn các Framework:
+   + vueJS hoặc react cho fronend
+   		cmd: php artisan ui vue 
+   		cmd: npm install
+   + bootstrap
+		cmd: php artisan ui bootstrap 
+   		cmd: npm install
+
+ - validate: là các rule chứa trong các request gửi từ route đến các controller
+
+ - ajax với Laravel: 
+   + là 1 KỸ THUẬT (không phải là 1 framework) lấy dữ liệu mà không cần load lại trang web
+   + trong laravel ta sử dụng vueJS + thư viện axios để xây dựng kỹ thuật này
+   + sử dụng cho các single page
+
+ 
+
+ - Resource Controller: sử dụng khi make các modelController để tự động tạo ra các hàm (create, update, delete, get...) trong controller cũng như các route của nó
+ 	+ b1: tạo ra model và migration:
+ 		cmd: php artisan make:model Models/Product -m
+ 	+ b2: tạo ra Resource Controller:
+ 		cmd: php artisan make:controller ProductController --resource
+ 	+ tự động route về các hàm trong controller (không cần viết các route post, get):
+ 		. trong route api:
+ 			code: Route::resource('/product', 'ProducController');
+
+ - Socialite: Đăng nhập bằng mạng xã hội
+
+ - middleware: là 1 công cụ để khoanh vùng các phần trong 1 ứng dụng do 1 thành phần làm chủ
+ 	+ cmd: php artisan make:middleware tên_middware
+ 	+ đăng ký middleware vừa tạo trong file Kennel.php
+ 		vd:  //đăng ký middleware
+        	'admin' => \App\Http\Middleware\Admin::class,
+    + ở route web, cấu hình route đi qua middleware đã chọn:
+    	vd: 
+    	Route::get('/admin', 'AdminController@home')->middleware('admin')->name('adminHome');
+   		// khi người dùng truy cập trang /admin, route sẽ bắt buộc phải đi qua hàm handle() trong middleware('admin'), thực hiện các tác vụ đề ra trong hàm đó rồi mới được trả về hàm trong controller
+   	+ hàm handle($request, Closure $next, $role)
+   		. Biến Closure $next và trả "return $next($request);" có ý nghĩa: request đã hợp lệ và cho phép truy cập vào controller
+   		. Biến $role nhận giá trị từ route:
+   			vd: Route::get('/admin','AdminController@adminPage')->middleware('role:admin')->name('adminHome');
+   				Route::get('/user', 'UserController@userPage')->middleware('role:user')->name('userPage');
+ - Phân quyền (Roles) Admin, User: 
+ 	+ trong thực thế việc phân quyền được chia thành 2 loại:
+	 	. Các Roles có những quyền cố định riêng:
+	 		vd: admin có quyền tạo mới 1 sản phẩm
+	 			user chỉ có quyền thêm sản phẩm đó vào giở hàng
+	 	. Phân quyền động:
+	 		. Admin có thể cho 1 user nào đó lên nắm 1 quyền cụ thể
+	+ các bước tạo roles:
+		. make 1 migration để tạo ra 1 bảng chứa các rotes
+		. tạo 1 model role
+		. tạo quan hệ giữa User(Admin) và role
+
+
+
+
+
+
+
+
+
+
+
+
