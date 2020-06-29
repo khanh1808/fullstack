@@ -29,6 +29,9 @@
                 }
             myWatch = new watch(1000);
 - Destructor: hàm hủy khởi tạo.
+- Single thread: trong PHP, mỗi request gửi lên server sẽ chạy 1 luồng riêng biệt để xử lý mà không gộp chung lại. Do đó, khi 1 request bị lỗi trong quá trình xử lý thì các request khác vẫn có thể chạy bình thường. Nên trong PHP người ta thường không sử dụng hàm Destructor.
+  + php có giới hạn thời gian xử lý request (timeout) và ta có thể set thời gian đó trong phpinfor()
+
 - Property (là các thuộc tính của các class:
   + Được viết bằng các tính từ
   + Để lấy thuộc tính ra ta sử dụng dấu ->
@@ -70,6 +73,7 @@
 
 - từ khóa "this":
   + this là đang chỉ vào đối tượng hiện tại và đại diện cho 1 class
+  + sử dụng biến this khi muốn trỏ đến 1 biến khác bên trong 1 class
     vd: class hinhChuNhat {
         public $rong = 10;
         public $dai = 20;

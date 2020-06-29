@@ -134,7 +134,7 @@ Backend:
 				'height' => 60,
 				'weight' => 170
 	  		     ];	
-			     $human['lover'] = 'linh';	
+			     $human['lover'] = 'messi';	
 	. array_pop() :xóa phần tử cuối cùng của mảng:
 			vd: $students = array (
 				'hoàng văn khánh',
@@ -233,23 +233,23 @@ Backend:
            			 echo $key. ' là '. $value;
             		    }
 	. for():
-			vd: $nameSt = ['khánh', 'linh', 'chính'];
+			vd: $nameSt = ['khánh', 'messi', 'chính'];
 			    for($index = 0; $index < count($nameSt); $index++) {
 				echo $nameSt[$index];
 			    }
 		. continue; \\ bỏ qua giá trị áp dụng điều kiện và tiếp tục vòng lặp
-			vd: $nameSt = ['khánh', 'linh', 'chính'];
+			vd: $nameSt = ['khánh', 'messi', 'chính'];
 			    for($index = 0; $index < count($nameSt); $index++) {
 				if ($index == 1) {
-					continue; // bỏ qua 'linh' và tiếp tục vòng lặp
+					continue; // bỏ qua 'messi' và tiếp tục vòng lặp
 				}
 				echo $nameSt[$index];
 			    }
 		. break; \\ nếu bắt gặp giá trị áp dụng điều kiện thì dừng và thoát vòng lặp
-			vd: $nameSt = ['khánh', 'linh', 'chính'];
+			vd: $nameSt = ['khánh', 'messi', 'chính'];
 			    for($index = 0; $index < count($nameSt); $index++) {
 				if ($index == 1) {
-					break; // dừng vòng lặp (bỏ qua cả giá trị 'linh')
+					break; // dừng vòng lặp (bỏ qua cả giá trị 'messi')
 				}
 				echo $nameSt[$index];
 			    }
